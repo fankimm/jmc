@@ -117,11 +117,13 @@ export default async function handler(
     const distance = ['가까워요', '쪼오금 멀어요', '멀어요'][
       오늘의추천메뉴.distance - 1
     ];
-
+    const stars = '⭐️'.repeat(오늘의추천메뉴.score);
     const result = await web.chat.postMessage({
       text: `오늘의 추천메뉴는 ${오늘의추천메뉴.title} 입니다.\n가격은 ${
         오늘의추천메뉴.price
-      }원이며, 거리는 ${distance}.\n${오늘의추천메뉴.description.join('\n')}`,
+      }원이며, 거리는 ${distance}.\n${오늘의추천메뉴.description.join(
+        '\n'
+      )}\n${stars}`,
       channel: conversationId || '',
     });
 
