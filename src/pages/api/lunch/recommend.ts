@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { WebClient } from '@slack/web-api';
 import type { NextApiRequest, NextApiResponse } from 'next';
-
 interface Lunch {
   title: string;
   price: number;
@@ -94,12 +94,10 @@ const mock: Lunch[] = [
   },
 ];
 
-export default function handler(
+export default async function handler(
   _req: NextApiRequest,
   res: NextApiResponse<string>
 ) {
-  const { WebClient } = require('@slack/web-api');
-
   // Read a token from the environment variables
   try {
     const token = process.env.SLACK_TOKEN;
@@ -113,21 +111,18 @@ export default function handler(
     const distance = ['가까워요', '쪼오금 멀어요', '멀어요'][
       오늘의추천메뉴.distance - 1
     ];
-    (async () => {
-      // Post a message to the channel, and await the result.
-      // Find more arguments and details of the response: https://api.slack.com/methods/chat.postMessage
-      const result = await web.chat.postMessage({
-        text: `오늘의 추천메뉴는 ${오늘의추천메뉴.title} 입니다.\n가격은 ${
-          오늘의추천메뉴.price
-        }원이며, 거리는 ${distance}.\n${오늘의추천메뉴.description.join('\n')}`,
-        channel: conversationId,
-      });
 
-      // The result contains an identifier for the message, `ts`.
-      console.log(
-        `Successfully send message ${result.ts} in conversation ${conversationId}`
-      );
-    })();
+    const result = await web.chat.postMessage({
+      text: `오늘의 추천메뉴는 ${오늘의추천메뉴.title} 입니다.\n가격은 ${
+        오늘의추천메뉴.price
+      }원이며, 거리는 ${distance}.\n${오늘의추천메뉴.description.join('\n')}`,
+      channel: conversationId || '',
+    });
+
+    // The result contains an identifier for the message, `ts`.
+    console.log(
+      `Successfully send message ${result.ts} in conversation ${conversationId}`
+    );
 
     res.status(200).send('점심 메뉴 추천이 필요하시군요???');
   } catch (err) {
