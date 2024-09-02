@@ -106,11 +106,11 @@ export default async function handler(
     calledCount++;
     const token = process.env.SLACK_TOKEN;
     console.log('token', token);
-    console.log('body', req.body);
+    console.log('body', req.body.channel_id);
 
     // Initialize
     const web = new WebClient(token);
-    const conversationId = process.env.SLACK_CONVERSATION_ID;
+    const conversationId = req.body.channel_id;
     console.log('conversationId', conversationId);
     const 오늘의추천메뉴 = mock[Math.floor(Math.random() * mock.length)];
     const distance = ['가까워요', '쪼오금 멀어요', '멀어요'][
