@@ -1,10 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-type Data = {
-  name: string;
-};
-
 interface Lunch {
   title: string;
   price: number;
@@ -100,7 +96,7 @@ const mock: Lunch[] = [
 
 export default function handler(
   _req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<string>
 ) {
   const { WebClient } = require('@slack/web-api');
 
@@ -131,5 +127,11 @@ export default function handler(
     );
   })();
 
-  res.status(200).json({ name: 'John Doe' });
+  res
+    .status(200)
+    .send(
+      `오늘의 추천메뉴는 ${오늘의추천메뉴.title} 입니다.\n가격은 ${
+        오늘의추천메뉴.price
+      }원이며, 거리는 ${distance}.\n${오늘의추천메뉴.description.join('\n')}`
+    );
 }
