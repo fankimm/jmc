@@ -106,7 +106,7 @@ export default function handler(
   // Initialize
   const web = new WebClient(token);
   const conversationId = process.env.SLACK_CONVERSATION_ID;
-
+  console.log('conversationId', conversationId);
   const 오늘의추천메뉴 = mock[Math.floor(Math.random() * mock.length)];
   const distance = ['가까워요', '쪼오금 멀어요', '멀어요'][
     오늘의추천메뉴.distance - 1
