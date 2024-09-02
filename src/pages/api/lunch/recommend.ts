@@ -94,14 +94,19 @@ const mock: Lunch[] = [
   },
 ];
 
+let calledCount = 0;
+
 export default async function handler(
-  _req: NextApiRequest,
+  req: NextApiRequest,
   res: NextApiResponse<string>
 ) {
   // Read a token from the environment variables
   try {
+    console.log('호출', calledCount);
+    calledCount++;
     const token = process.env.SLACK_TOKEN;
     console.log('token', token);
+    console.log('body', req.body);
 
     // Initialize
     const web = new WebClient(token);
