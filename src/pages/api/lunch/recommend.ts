@@ -103,6 +103,7 @@ export default function handler(
   // Read a token from the environment variables
   try {
     const token = process.env.SLACK_TOKEN;
+    console.log('token', token);
 
     // Initialize
     const web = new WebClient(token);
@@ -128,13 +129,7 @@ export default function handler(
       );
     })();
 
-    res
-      .status(200)
-      .send(
-        `res : 오늘의 추천메뉴는 ${오늘의추천메뉴.title} 입니다.\n가격은 ${
-          오늘의추천메뉴.price
-        }원이며, 거리는 ${distance}.\n${오늘의추천메뉴.description.join('\n')}`
-      );
+    res.status(200).send('점심 메뉴 추천이 필요하시군요???');
   } catch (err) {
     console.log(err);
   }
