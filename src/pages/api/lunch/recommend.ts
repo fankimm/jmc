@@ -101,37 +101,41 @@ export default function handler(
   const { WebClient } = require('@slack/web-api');
 
   // Read a token from the environment variables
-  const token = process.env.SLACK_TOKEN;
+  try {
+    const token = process.env.SLACK_TOKEN;
 
-  // Initialize
-  const web = new WebClient(token);
-  const conversationId = process.env.SLACK_CONVERSATION_ID;
-  console.log('conversationId', conversationId);
-  const 오늘의추천메뉴 = mock[Math.floor(Math.random() * mock.length)];
-  const distance = ['가까워요', '쪼오금 멀어요', '멀어요'][
-    오늘의추천메뉴.distance - 1
-  ];
-  (async () => {
-    // Post a message to the channel, and await the result.
-    // Find more arguments and details of the response: https://api.slack.com/methods/chat.postMessage
-    const result = await web.chat.postMessage({
-      text: `오늘의 추천메뉴는 ${오늘의추천메뉴.title} 입니다.\n가격은 ${
-        오늘의추천메뉴.price
-      }원이며, 거리는 ${distance}.\n${오늘의추천메뉴.description.join('\n')}`,
-      channel: conversationId,
-    });
+    // Initialize
+    const web = new WebClient(token);
+    const conversationId = process.env.SLACK_CONVERSATION_ID;
+    console.log('conversationId', conversationId);
+    const 오늘의추천메뉴 = mock[Math.floor(Math.random() * mock.length)];
+    const distance = ['가까워요', '쪼오금 멀어요', '멀어요'][
+      오늘의추천메뉴.distance - 1
+    ];
+    (async () => {
+      // Post a message to the channel, and await the result.
+      // Find more arguments and details of the response: https://api.slack.com/methods/chat.postMessage
+      const result = await web.chat.postMessage({
+        text: `오늘의 추천메뉴는 ${오늘의추천메뉴.title} 입니다.\n가격은 ${
+          오늘의추천메뉴.price
+        }원이며, 거리는 ${distance}.\n${오늘의추천메뉴.description.join('\n')}`,
+        channel: conversationId,
+      });
 
-    // The result contains an identifier for the message, `ts`.
-    console.log(
-      `Successfully send message ${result.ts} in conversation ${conversationId}`
-    );
-  })();
+      // The result contains an identifier for the message, `ts`.
+      console.log(
+        `Successfully send message ${result.ts} in conversation ${conversationId}`
+      );
+    })();
 
-  res
-    .status(200)
-    .send(
-      `오늘의 추천메뉴는 ${오늘의추천메뉴.title} 입니다.\n가격은 ${
-        오늘의추천메뉴.price
-      }원이며, 거리는 ${distance}.\n${오늘의추천메뉴.description.join('\n')}`
-    );
+    res
+      .status(200)
+      .send(
+        `res : 오늘의 추천메뉴는 ${오늘의추천메뉴.title} 입니다.\n가격은 ${
+          오늘의추천메뉴.price
+        }원이며, 거리는 ${distance}.\n${오늘의추천메뉴.description.join('\n')}`
+      );
+  } catch (err) {
+    console.log(err);
+  }
 }
