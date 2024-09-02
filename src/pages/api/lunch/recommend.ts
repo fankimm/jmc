@@ -106,7 +106,7 @@ export default async function handler(
     calledCount++;
     const token = process.env.SLACK_TOKEN;
     console.log('token', token);
-    console.log('body', req.body.channel_id);
+    console.log('body', req.body);
 
     // Initialize
     const web = new WebClient(token);
