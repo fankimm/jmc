@@ -4,9 +4,9 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 interface Lunch {
   title: string;
   price: number;
-  distance: 1 | 2 | 3;
+  distance: 1 | 2 | 3; //1=가까움, 3='멀다'
   description: string[];
-  score: 1 | 2 | 3 | 4 | 5;
+  score: 1 | 2 | 3 | 4 | 5; //5점이 최고점
 }
 
 const mock: Lunch[] = [
